@@ -1,0 +1,55 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    background-image: url(img/sky2.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.header header {
+    font-family: 'Merriweather';
+    font-size: 3em;
+    text-align: center;
+    color: #fefefa;
+    padding: 30px 0 10px 0;
+}
+
+.header {
+    align-content: center;
+}
+
+.navbar {
+    overflow: hidden;
+    list-style: none;
+    padding: 10px 0;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.navbar ul {
+    list-style-type: none;
+}
+
+.navbar li {
+    float: left;
+}
+
+.navbar ul{
+    display: inline-block;
+}
+
+/* Navbar links */
+.navbar a {
+    display: block;
+    padding: 0 20px;
+    color: white;
+    font-size: 2em;
+    text-decoration: none;
+}
+
+.container {
+    text-align: center;
+}
+
+
+
