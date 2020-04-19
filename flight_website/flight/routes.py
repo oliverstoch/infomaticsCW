@@ -20,7 +20,8 @@ def home():
 	outboundpatialdate = "2020-09-01"    
 
 
-	url = "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/{0}/{1}/{2}/{3}/{4}/{5}".format(
+	#url = "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/{0}/{1}/{2}/{3}/{4}/{5}".format(
+	url = "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browseroutes/v1.0/{0}/{1}/{2}/{3}/{4}/{5}".format(
 		country,
 		currency,
 		locale,
@@ -32,17 +33,23 @@ def home():
 	#optional configurations
 	querystring = {
 		#i think we can change this one to something else....
-		"inboundpartialdate":"2020-12-01"
+		#"inboundpartialdate":"2020-12-01"
 		}
 
 	headers = {
 	    'x-rapidapi-host': "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
-	    'x-rapidapi-key': "e9b2718b05mshcc5900c72ea4c29p1ccf54jsncf4f4e5f093c"
+	    'x-rapidapi-key': "e9dd7bf803mshdf38afc80a64cfap197f5cjsn980ff6c6c303"
 	    }
+	#e9b2718b05mshcc5900c72ea4c29p1ccf54jsncf4f4e5f093c
+    #e9dd7bf803mshdf38afc80a64cfap197f5cjsn980ff6c6c303
 
 	response = requests.request("GET", url, headers=headers, params=querystring)
-	#print(response.text)
 
-	return render_template('home.html', title='Home', response=response)
+	responseDictionary = response.json()
+	quotes = responseDictionary.get("Quotes")
+
+	
+	print(type(response))
+	return render_template('home.html', title='Home', response=response, quotes = quotes)
 
 

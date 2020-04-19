@@ -3,19 +3,32 @@
 <div class="container">
     <div class="search">
        <h2>Search Flights...</h2>
-        <form>
+
+
+        <form action="/" method="post">
            <label for="date_departs">Date:</label>
            <input type="date" id="date_departs" name="date_departs"><br><br>
+
             <label for="from">From:</label>
             <input type="text" id="from" name="from"><br><br>
+
             <label for="to">To:</label>
             <input type="text" id="to" name="to"><br><br>
+
             <input type="submit" value="submit">
         </form>
+
+
+
     </div>
 
-    {%for quote in response%}
+    {%for quote in quotes%}
+    <div id = "QuoteCard">
       <p>{{ quote}}</p>
+      <br>
+      <hr>
+    </div>
+
     {%endfor%}
 
 
