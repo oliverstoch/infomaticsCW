@@ -7,6 +7,7 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationE
 #from models import  *
 
 class LoginForm(FlaskForm):
-    username = StringField('Username')
-    password = PasswordField('Password')
+    departDate = date('Username')
+    origin = PasswordField('Password')
+    destination = SubmitField("Password")
     submit = SubmitField("Login")

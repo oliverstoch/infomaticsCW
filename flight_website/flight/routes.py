@@ -3,6 +3,7 @@ from flask import render_template, url_for
 from flight import app
 from heapq import nsmallest
 from statistics import mean 
+from operator import itemgetter 
 import requests
 
 @app.route("/")
@@ -16,9 +17,8 @@ def home():
 
 	#These will be input from the user (Hardcoded for now)
 	originplace = "SFO-sky" 
-	destinationplace = "JFK-sky"       
+	destinationplace = "LAX-sky"       
 	outboundpatialdate = "2020-09-01"    
-
 
 	#url = "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/{0}/{1}/{2}/{3}/{4}/{5}".format(
 	url = "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browseroutes/v1.0/{0}/{1}/{2}/{3}/{4}/{5}".format(
@@ -52,21 +52,49 @@ def home():
 	responseDictionary = response.json()
 
 	#Get lists, quotes and carriers.(a Quote is an offer or possible route. Carriers is a list of airlines used in the any of the quotes)
-	quotes = responseDictionary.get("Quotes")
+	quotes = getQuotes(responseDictionary)
 	carriers = responseDictionary.get("Carriers")
 
-	#Calculate valueForMoney for each quote and append the value to each quote.
-	for quote in quotes:
-		quote["valueForMoney"] =  valueForMoney(quotes, quote, timeChosen="2020-09-02T00:00:00")
 
-	# Sort list quotes by valueForMoney with the best first
-	quotes = sorted(quotes, key=lambda k: k['valueForMoney'],reverse=True) 
 
 	return render_template('home.html', title = 'Home', response = response, quotes = quotes, carriers = carriers)
 
 
-def valueForMoney(quotes, quote, timeChosen = "2020-09-02T00:00:00" ):
+
+def getQuotes(responseDictionary):
 	"""
+	The purpuse of this function is to retrive the Quotes from the responce object, append a 'value for money'
+	to each quote object, and to return the quotes sorted by the value for money.
+	"""
+
+	#Get lists, quotes and carriers.(a Quote is an offer or possible route. Carriers is a list of airlines used in the any of the quotes)
+	quotes = responseDictionary.get("Quotes")
+
+	#Make a list of prices from all the quotes 
+	listOfPrices = []
+	for quote in quotes:
+		listOfPrices.append( quote.get("MinPrice") )
+
+	#the avg price of all flights
+	avgPrice = mean(listOfPrices)
+
+	#get avg price of the 4 cheapest flights 
+	avgCheapestFour= mean( nsmallest(4, listOfPrices) )
+
+	#Calculate valueForMoney for each quote and append the value to each quote.
+	for quote in quotes:
+		quote["valueForMoney"] = valueForMoney(quote, avgPrice, avgCheapestFour, timeChosen="2020-09-02T00:00:00")
+
+	# Sort list quotes by valueForMoney first, and cheapest seconed
+	quotes = sorted(quotes, key=lambda d: (-d['valueForMoney'], d['MinPrice']))
+
+	return quotes
+
+
+def valueForMoney(quote, avgPrice, avgCheapestFour, timeChosen = "2020-09-02T00:00:00" ):
+	"""
+	#---------------------------------------DESCRIPTION--------------------------------------------------------------#
+
 	This algorithim Classifys or detemines the value for money or "recommentedness" of a given quote.
 	The recommentedness of a quote is determined by three factors:
 
@@ -75,55 +103,41 @@ def valueForMoney(quotes, quote, timeChosen = "2020-09-02T00:00:00" ):
 		* Date of departure is exactly that which was input by the user
 
 	based on these factors, a value is returned indicating the 'class' of the quote.
-	A given quote can be attributed to 1 of 6 diffent classes, 5 being the most desirable and 0 being the least desireable
+	A given quote can be attributed to 1 of 6 diffent classes, 5 being the most desirable and 0 being the least desireable.
 
 	""" 
-
-	#print(quote.get("Direct") , quote.get("MinPrice") , quote.get("OutboundLeg").get("DepartureDate") )
-
-
-	#----------------------------------------COMPUTATIONS---------------------------------------------------------#
-	
-	#Make a list of prices from all the quotes 
-	listOfPrices = []
-	for qu in quotes:
-		listOfPrices.append( qu.get("MinPrice"))
-
-	#the avg price of all flights
-	avgPrice = mean(listOfPrices)
-
-	#get avg price of the 3 cheapest flights 
-	avgCheapestThree = mean( nsmallest(3, listOfPrices) )
+	#---------------------------------------VARIABLES--------------------------------------------------------------#
 
 	#is the quote's departure date the same as the one specifide by the user 
 	isCorrectDate = quote.get("OutboundLeg").get("DepartureDate") == timeChosen 
 
-
+	#get the price of quote
+	price=quote.get("MinPrice")
 
 	#---------------------------------------CLASSIFING FASE----------------------------------------------------------#
 
-	# flight is direct and costs less then $avgCheapestThree on the prefered date (Very Good Value for money!)
-	if quote.get("Direct") and quote.get("MinPrice") < avgCheapestThree and isCorrectDate :       
+	# flight is direct and costs less then $avgCheapestFour on the prefered date (Very Good Value for money!)
+	if quote.get("Direct") and quote.get("MinPrice") < avgCheapestFour and isCorrectDate :       
 		return 5
 
-	#flight is direct and costs less then $avgCheapestThree regardless of the date (Pritty Good Value for money. ect..)
-	elif quote.get("Direct") and quote.get("MinPrice") < avgCheapestThree :
+	#flight is direct and costs less then $avgCheapestFour regardless of the date (Pritty Good Value for money. ect..)
+	elif quote.get("Direct") and quote.get("MinPrice") < avgCheapestFour :
 		return 4
 
-	#flight is direct and is either on the prefferd date or less then $avgPrice
-	elif quote.get("Direct") and ( isCorrectDate or quote.get("MinPrice") < avgPrice ) :
+	#flight is direct and is either on the prefferd date or less then $avgPrice - 50
+	elif quote.get("Direct") and ( isCorrectDate or quote.get("MinPrice") < avgPrice-50) :
 		return 3 
 
-	#flight is less then $avgCheapestThree regardless of whether the flight is direct or the date
+	#flight is less then $avgCheapestFour regardless of whether the flight is direct or the date
 	#Note if the flight is also direct, Rule2 will have already been triggerd
-	elif quote.get("MinPrice") < avgCheapestThree :
+	elif quote.get("MinPrice") < avgCheapestFour:  
 		return 2
 
 	#flight is less then $avgPrice dollars regardless of whether the flight is direct or the date
-	#Note if the flight is also direct or the date id the prefered one, Rule3 will have already been triggerd
+	#Note if the flight is also direct or the date is the prefered one, Rule3 will have already been triggerd
 	elif quote.get("MinPrice") < avgPrice:
 		return 1
-
+ 
 	#If the quote didnt trigger and of the rules 
 	else:
 		return 0
