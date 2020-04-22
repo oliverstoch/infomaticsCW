@@ -54,6 +54,8 @@ def home():
 	#Get lists, quotes and carriers.(a Quote is an offer or possible route. Carriers is a list of airlines used in the any of the quotes)
 	quotes = getQuotes(responseDictionary)
 	carriers = responseDictionary.get("Carriers")
+	print(carriers)
+
 
 
 
@@ -63,10 +65,9 @@ def home():
 
 def getQuotes(responseDictionary):
 	"""
-	The purpuse of this function is to retrive the Quotes from the responce object, append a 'value for money'
-	to each quote object, and to return the quotes sorted by the value for money.
+	The purpuse of this function is to retrive the Quotes from the responce object, append a 'valueForMoney'
+	and an 'airlineName' value to each quote object, to return the quotes sorted by the value for money and price.
 	"""
-
 	#Get lists, quotes and carriers.(a Quote is an offer or possible route. Carriers is a list of airlines used in the any of the quotes)
 	quotes = responseDictionary.get("Quotes")
 
@@ -75,23 +76,41 @@ def getQuotes(responseDictionary):
 	for quote in quotes:
 		listOfPrices.append( quote.get("MinPrice") )
 
-	#the avg price of all flights
+	#the avg price of all flights in quotes
 	avgPrice = mean(listOfPrices)
 
-	#get avg price of the 4 cheapest flights 
+	#Get avg price of the 4 cheapest flights 
 	avgCheapestFour= mean( nsmallest(4, listOfPrices) )
+
+	#Get all carriers(Airlines) from responce object
+	#carriers contails a list of airlineIds and Ariline name
+	#eg.   carriers =  [ (Airlineid = 420, AirlineName = "FlyHigh Airlines"), (Airlineid = 69, AirlineName = "Miles Airlines") ] 
+	carriers = responseDictionary.get("Carriers")
 
 	#Calculate valueForMoney for each quote and append the value to each quote.
 	for quote in quotes:
-		quote["valueForMoney"] = valueForMoney(quote, avgPrice, avgCheapestFour, timeChosen="2020-09-02T00:00:00")
+		quote["valueForMoney"] = getValueForMoney(quote, avgPrice, avgCheapestFour, timeChosen="2020-09-02T00:00:00")
+		quote["airlineName"] = getAirlineName(quote, carriers)
 
-	# Sort list quotes by valueForMoney first, and cheapest seconed
+	#Sort list quotes by valueForMoney first, and cheapest seconed
 	quotes = sorted(quotes, key=lambda d: (-d['valueForMoney'], d['MinPrice']))
-
 	return quotes
 
+def getAirlineName(quote, carriers):
+	"""
+	This function takes a quote's Id, seaches for that id in carriers, and returns the airline name corrisponding to that id.
+	"""
+	#get quotes airlineID, airlineId
+	airlineId = quote.get("OutboundLeg").get("CarrierIds")[0]
+	#Find and return the AirlineName corrisponding to the airlineId and  
+	for carriersIdAndName in carriers:
+		if carriersIdAndName.get("CarrierId") == airlineId:
+			return carriersIdAndName.get("Name")
+				
 
-def valueForMoney(quote, avgPrice, avgCheapestFour, timeChosen = "2020-09-02T00:00:00" ):
+
+
+def getValueForMoney(quote, avgPrice, avgCheapestFour, timeChosen = "2020-09-02T00:00:00" ):
 	"""
 	#---------------------------------------DESCRIPTION--------------------------------------------------------------#
 
@@ -102,7 +121,7 @@ def valueForMoney(quote, avgPrice, avgCheapestFour, timeChosen = "2020-09-02T00:
 		* Price of the quote relative to the AVG price and Cheapest 3 prices
 		* Date of departure is exactly that which was input by the user
 
-	based on these factors, a value is returned indicating the 'class' of the quote.
+	Based on these factors, a value is returned indicating the 'class' of the quote.
 	A given quote can be attributed to 1 of 6 diffent classes, 5 being the most desirable and 0 being the least desireable.
 
 	""" 

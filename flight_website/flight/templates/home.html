@@ -3,8 +3,6 @@
 <div class="container">
     <div class="search">
        <h2>Search Flights...</h2>
-
-
         <form action="/" method="post">
            <label for="date_departs">Date:</label>
            <input type="date" id="date_departs" name="date_departs"><br><br>
@@ -17,34 +15,22 @@
 
             <input type="submit" value="submit">
         </form>
-
-
-
     </div>
-
-    {%for quote in quotes%}
-    <div id = "QuoteCard">
-      
-
-
-      {%for quoteDetailKey, quoteDetailValue in quote.items()%}
-
-
-        <p>{{  quoteDetailKey }} :  {{quoteDetailValue}} </p>
-      
-
-      {%endfor%}
-
-      <br>
-      <hr>
-    </div>
-
-    {%endfor%}
-
-
-
-
-
-    
 </div>
+
+{%for quote in quotes%}
+<div class = "QuoteCard">    
+  <p>
+    Flight Price:  {{quote.get("MinPrice")}}<br>
+    Direct:        {{quote.get("Direct")}}<br>
+    Value for Money: {{quote.get("valueForMoney")}}/5 <br>
+    Airline(s): {{quote.get("airlineName")}}<br>
+    Date of flight: {{quote.get("OutboundLeg").get("DepartureDate").replace("T00:00:00","")}}
+    <br>
+    <hr>
+  </p>
+
+</div>
+{%endfor%}   
+
 {% endblock content %}
