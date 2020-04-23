@@ -2,22 +2,128 @@
 {% block content %}
 <div class="container">
     <div class="search">
+<<<<<<< HEAD
+       <h2>Search Flights..</h2>
+       
+    <div class="tab">
+       <h2>Select Journey Type:</h2>
+        <button class="tablinks" onclick="openType(event,'oneway')">One-Way</button>
+        <button class="tablinks" onclick="openType(event,'return')">Return</button>
+    </div>
+    
+    
+    <div class="tabcontent" id="oneway">
+=======
        <h2>Search Flights...</h2>
+>>>>>>> a829b9888f3266a41d6dcea58bd2ab07e5cecc3e
         <form action="/" method="post">
-           <label for="date_departs">Date:</label>
-           <input type="date" id="date_departs" name="date_departs"><br><br>
-
-            <label for="from">From:</label>
-            <input type="text" id="from" name="from"><br><br>
-
-            <label for="to">To:</label>
-            <input type="text" id="to" name="to"><br><br>
-
-            <input type="submit" value="submit">
+            <div class="out">
+                <label for="date_out">Date : </label>
+                <input type="date" id="date_out">
+                <label for="origin">From : </label>
+                <input type="text" id="origin">
+                <label for="destination">Destination : </label>
+                <input type="text" id="destination">
+            </div>
         </form>
+    </div>
+    
+    <div class="tabcontent" id="return">
+        <form action="/" method="post">
+            <div class="out_in">
+                <label for="date_out">Outbound Date: </label>
+                <input type="date" id="date_out">
+                <label for="date_in">Return : </label>
+                <input type="date" id="date_in">
+                <label for="origin">From : </label>
+                <input type="text" id="origin">
+                <label for="destination">Destination : </label>
+                <input type="text" id="destination">
+            </div>
+        </form>
+<<<<<<< HEAD
+    </div>
+
+    </div>
+   <!--{%for quote in quotes%}
+    <div id = "QuoteCard">
+      <p>{{ quote}}</p>
+      <br>
+      <hr>
+=======
+>>>>>>> a829b9888f3266a41d6dcea58bd2ab07e5cecc3e
     </div>
 </div>
 
+<<<<<<< HEAD
+    {%endfor%} -->
+    
+</div>
+    <script>
+    function openType(evt, type){
+          var i, tabcontent, tablinks;
+          tabcontent = document.getElementsByClassName("tabcontent");
+          for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+          }
+          tablinks = document.getElementsByClassName("tablinks");
+          for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+          }
+          document.getElementById(type).style.display = "block";
+          evt.currentTarget.className += " active";
+    }
+        
+    document.getElementById("oneway").click();
+    </script>
+
+
+
+
+<!--     <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "FlightReservation",
+      "reservationId": "RXJ34P",
+      "reservationStatus": "http://schema.org/ReservationConfirmed",
+      "passengerPriorityStatus": "Fast Track",
+      "passengerSequenceNumber": "ABC123",
+      "securityScreening": "TSA PreCheck",
+      "underName": {
+        "@type": "Person",
+        "name": "Eva Green"
+      },
+      "reservationFor": {
+        "@type": "Flight",
+        "flightNumber": "UA110",
+        "provider": {
+          "@type": "Airline",
+          "name": "Continental",
+          "iataCode": "CO",
+          "boardingPolicy": "http://schema.org/ZoneBoardingPolicy"
+        },
+        "seller": {
+          "@type": "Airline",
+          "name": "United",
+          "iataCode": "UA"
+        },
+        "departureAirport": {
+          "@type": "Airport",
+          "name": "San Francisco Airport",
+          "iataCode": "SFO"
+        },
+        "departureTime": "2017-03-04T20:15:00-08:00",
+        "arrivalAirport": {
+          "@type": "Airport",
+          "name": "John F. Kennedy International Airport",
+          "iataCode": "JFK"
+        },
+        "arrivalTime": "2017-03-05T06:30:00-05:00"
+      }
+    }
+    </script> -->
+    
+=======
 {%for quote in quotes%}
 <div class = "QuoteCard">    
   <p>
@@ -35,4 +141,5 @@
 </div>
 {%endfor%}   
 
+>>>>>>> a829b9888f3266a41d6dcea58bd2ab07e5cecc3e
 {% endblock content %}
