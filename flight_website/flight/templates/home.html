@@ -25,7 +25,9 @@
     Direct:        {{quote.get("Direct")}}<br>
     Value for Money: {{quote.get("valueForMoney")}}/5 <br>
     Airline(s): {{quote.get("airlineName")}}<br>
-    Date of flight: {{quote.get("OutboundLeg").get("DepartureDate").replace("T00:00:00","")}}
+    Date of flight: {{quote.get("OutboundLeg").get("DepartureDate").replace("T00:00:00","")}}<br>
+    Origin airport: {{quote.get("originName")}}<br>
+    Destination airport: {{quote.get("destinationName")}}
     <br>
     <hr>
   </p>

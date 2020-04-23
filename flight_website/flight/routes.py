@@ -54,17 +54,13 @@ def home():
 	#Get lists, quotes and carriers.(a Quote is an offer or possible route. Carriers is a list of airlines used in the any of the quotes)
 	quotes = getQuotes(responseDictionary)
 	carriers = responseDictionary.get("Carriers")
-	print(carriers)
-
-
-
-
 	return render_template('home.html', title = 'Home', response = response, quotes = quotes, carriers = carriers)
 
 
 
 def getQuotes(responseDictionary):
 	"""
+	#---------------------------------------DESCRIPTION--------------------------------------------------------------#
 	The purpuse of this function is to retrive the Quotes from the responce object, append a 'valueForMoney'
 	and an 'airlineName' value to each quote object, to return the quotes sorted by the value for money and price.
 	"""
@@ -84,21 +80,53 @@ def getQuotes(responseDictionary):
 
 	#Get all carriers(Airlines) from responce object
 	#carriers contails a list of airlineIds and Ariline name
-	#eg.   carriers =  [ (Airlineid = 420, AirlineName = "FlyHigh Airlines"), (Airlineid = 69, AirlineName = "Miles Airlines") ] 
+	#eg.   carriers =  [ {Airlineid : 420, AirlineName : "FlyHigh Airlines"}, {Airlineid : 69, AirlineName : "Miles above Airlines"} ] 
 	carriers = responseDictionary.get("Carriers")
+	#Get places from responce objcet
+	#places contains a list of airports, there Id and country ex...
+	#eg. places = [{Id : 1492, Airportname : heathrow, city : london ect...}] 
+	places = responseDictionary.get("Places")
 
 	#Calculate valueForMoney for each quote and append the value to each quote.
 	for quote in quotes:
 		quote["valueForMoney"] = getValueForMoney(quote, avgPrice, avgCheapestFour, timeChosen="2020-09-02T00:00:00")
 		quote["airlineName"] = getAirlineName(quote, carriers)
+		quote["originName"] = GetOriginName(quote, places)
+		quote["destinationName"] = GetDestinationName(quote, places)
+
 
 	#Sort list quotes by valueForMoney first, and cheapest seconed
 	quotes = sorted(quotes, key=lambda d: (-d['valueForMoney'], d['MinPrice']))
 	return quotes
 
+
+def GetOriginName(quote, places):
+	"""
+	#---------------------------------------DESCRIPTION--------------------------------------------------------------#
+	This function takes a quotes OriginID, searches for that id in places, and returns the orginName corispondiong to that OriginID 
+	"""
+	originID=quote.get("OutboundLeg").get("OriginId")
+	for place in places:
+		if place.get("PlaceId") == originID:
+			return place.get("Name")
+
+
+def GetDestinationName(quote, places):
+	"""
+	#---------------------------------------DESCRIPTION--------------------------------------------------------------#
+	This function takes a quotes  DestinationId, searches for that id in places, and returns the 
+	destinationName corrisponding to that DestinationId.
+	"""
+	destinationID = quote.get("OutboundLeg").get("DestinationId")
+	for place in places:
+		if place.get("PlaceId") == destinationID:
+			return place.get("Name")
+
+
 def getAirlineName(quote, carriers):
 	"""
-	This function takes a quote's Id, seaches for that id in carriers, and returns the airline name corrisponding to that id.
+	#---------------------------------------DESCRIPTION--------------------------------------------------------------#
+	This function takes a quote's Id, seaches for that id in carriers, and returns the airlineName corrisponding to that id.
 	"""
 	#get quotes airlineID, airlineId
 	airlineId = quote.get("OutboundLeg").get("CarrierIds")[0]
