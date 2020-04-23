@@ -2,6 +2,7 @@
 {% block content %}
 <div class="container">
     <div class="search">
+<<<<<<< HEAD
        <h2>Search Flights..</h2>
        
     <div class="tab">
@@ -12,6 +13,9 @@
     
     
     <div class="tabcontent" id="oneway">
+=======
+       <h2>Search Flights...</h2>
+>>>>>>> a829b9888f3266a41d6dcea58bd2ab07e5cecc3e
         <form action="/" method="post">
             <div class="out">
                 <label for="date_out">Date : </label>
@@ -37,6 +41,7 @@
                 <input type="text" id="destination">
             </div>
         </form>
+<<<<<<< HEAD
     </div>
 
     </div>
@@ -45,8 +50,12 @@
       <p>{{ quote}}</p>
       <br>
       <hr>
+=======
+>>>>>>> a829b9888f3266a41d6dcea58bd2ab07e5cecc3e
     </div>
+</div>
 
+<<<<<<< HEAD
     {%endfor%} -->
     
 </div>
@@ -114,4 +123,21 @@
     }
     </script> -->
     
+=======
+{%for quote in quotes%}
+<div class = "QuoteCard">    
+  <p>
+    Flight Price:  {{quote.get("MinPrice")}}<br>
+    Direct:        {{quote.get("Direct")}}<br>
+    Value for Money: {{quote.get("valueForMoney")}}/5 <br>
+    Airline(s): {{quote.get("airlineName")}}<br>
+    Date of flight: {{quote.get("OutboundLeg").get("DepartureDate").replace("T00:00:00","")}}
+    <br>
+    <hr>
+  </p>
+
+</div>
+{%endfor%}   
+
+>>>>>>> a829b9888f3266a41d6dcea58bd2ab07e5cecc3e
 {% endblock content %}
