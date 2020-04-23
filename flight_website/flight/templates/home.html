@@ -3,8 +3,6 @@
 <div class="container">
     <div class="search">
        <h2>Search Flights...</h2>
-
-
         <form action="/" method="post">
            <label for="date_departs">Date:</label>
            <input type="date" id="date_departs" name="date_departs"><br><br>
@@ -17,65 +15,22 @@
 
             <input type="submit" value="submit">
         </form>
-
-
-
     </div>
-
-    {%for quote in quotes%}
-    <div id = "QuoteCard">
-      <p>{{ quote}}</p>
-      <br>
-      <hr>
-    </div>
-
-    {%endfor%}
-
-
-
-
-<!--     <script type="application/ld+json">
-    {
-      "@context": "http://schema.org",
-      "@type": "FlightReservation",
-      "reservationId": "RXJ34P",
-      "reservationStatus": "http://schema.org/ReservationConfirmed",
-      "passengerPriorityStatus": "Fast Track",
-      "passengerSequenceNumber": "ABC123",
-      "securityScreening": "TSA PreCheck",
-      "underName": {
-        "@type": "Person",
-        "name": "Eva Green"
-      },
-      "reservationFor": {
-        "@type": "Flight",
-        "flightNumber": "UA110",
-        "provider": {
-          "@type": "Airline",
-          "name": "Continental",
-          "iataCode": "CO",
-          "boardingPolicy": "http://schema.org/ZoneBoardingPolicy"
-        },
-        "seller": {
-          "@type": "Airline",
-          "name": "United",
-          "iataCode": "UA"
-        },
-        "departureAirport": {
-          "@type": "Airport",
-          "name": "San Francisco Airport",
-          "iataCode": "SFO"
-        },
-        "departureTime": "2017-03-04T20:15:00-08:00",
-        "arrivalAirport": {
-          "@type": "Airport",
-          "name": "John F. Kennedy International Airport",
-          "iataCode": "JFK"
-        },
-        "arrivalTime": "2017-03-05T06:30:00-05:00"
-      }
-    }
-    </script> -->
-    
 </div>
+
+{%for quote in quotes%}
+<div class = "QuoteCard">    
+  <p>
+    Flight Price:  {{quote.get("MinPrice")}}<br>
+    Direct:        {{quote.get("Direct")}}<br>
+    Value for Money: {{quote.get("valueForMoney")}}/5 <br>
+    Airline(s): {{quote.get("airlineName")}}<br>
+    Date of flight: {{quote.get("OutboundLeg").get("DepartureDate").replace("T00:00:00","")}}
+    <br>
+    <hr>
+  </p>
+
+</div>
+{%endfor%}   
+
 {% endblock content %}
