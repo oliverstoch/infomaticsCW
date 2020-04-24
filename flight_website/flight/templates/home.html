@@ -2,7 +2,6 @@
 {% block content %}
 <div class="container">
     <div class="search">
-<<<<<<< HEAD
        <h2>Search Flights..</h2>
        
     <div class="tab">
@@ -13,9 +12,7 @@
     
     
     <div class="tabcontent" id="oneway">
-=======
        <h2>Search Flights...</h2>
->>>>>>> a829b9888f3266a41d6dcea58bd2ab07e5cecc3e
         <form action="/" method="post">
             <div class="out">
                 <label for="date_out">Date : </label>
@@ -41,22 +38,9 @@
                 <input type="text" id="destination">
             </div>
         </form>
-<<<<<<< HEAD
+    </div>
     </div>
 
-    </div>
-   <!--{%for quote in quotes%}
-    <div id = "QuoteCard">
-      <p>{{ quote}}</p>
-      <br>
-      <hr>
-=======
->>>>>>> a829b9888f3266a41d6dcea58bd2ab07e5cecc3e
-    </div>
-</div>
-
-<<<<<<< HEAD
-    {%endfor%} -->
     
 </div>
     <script>
@@ -80,50 +64,9 @@
 
 
 
-<!--     <script type="application/ld+json">
-    {
-      "@context": "http://schema.org",
-      "@type": "FlightReservation",
-      "reservationId": "RXJ34P",
-      "reservationStatus": "http://schema.org/ReservationConfirmed",
-      "passengerPriorityStatus": "Fast Track",
-      "passengerSequenceNumber": "ABC123",
-      "securityScreening": "TSA PreCheck",
-      "underName": {
-        "@type": "Person",
-        "name": "Eva Green"
-      },
-      "reservationFor": {
-        "@type": "Flight",
-        "flightNumber": "UA110",
-        "provider": {
-          "@type": "Airline",
-          "name": "Continental",
-          "iataCode": "CO",
-          "boardingPolicy": "http://schema.org/ZoneBoardingPolicy"
-        },
-        "seller": {
-          "@type": "Airline",
-          "name": "United",
-          "iataCode": "UA"
-        },
-        "departureAirport": {
-          "@type": "Airport",
-          "name": "San Francisco Airport",
-          "iataCode": "SFO"
-        },
-        "departureTime": "2017-03-04T20:15:00-08:00",
-        "arrivalAirport": {
-          "@type": "Airport",
-          "name": "John F. Kennedy International Airport",
-          "iataCode": "JFK"
-        },
-        "arrivalTime": "2017-03-05T06:30:00-05:00"
-      }
-    }
-    </script> -->
+
     
-=======
+
 {%for quote in quotes%}
 <div class = "QuoteCard">    
   <p>
@@ -141,5 +84,4 @@
 </div>
 {%endfor%}   
 
->>>>>>> a829b9888f3266a41d6dcea58bd2ab07e5cecc3e
 {% endblock content %}
