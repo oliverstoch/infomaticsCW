@@ -1,0 +1,3 @@
+if (self.CavalryLogger) { CavalryLogger.start_js(["9FM5E"]); }
+
+__d("UFI2CommentChatCommandAttachmentStyle.react",["React","UFI2CometRelayCreateFragmentContainer","UFI2CommentChatCommandAttachment.react","UFI2CommentChatCommandAttachmentStyle_styleTypeRenderer.graphql"],(function(a,b,c,d,e,f){"use strict";var g,h=b("React");c=b("UFI2CometRelayCreateFragmentContainer").createFragmentContainer;b("UFI2CometRelayCreateFragmentContainer").graphql;function a(a){a=a.styleTypeRenderer;a=a.attachment;return a==null?null:h.jsx(b("UFI2CommentChatCommandAttachment.react"),{attachment:a})}e.exports=c(a,{styleTypeRenderer:g!==void 0?g:g=b("UFI2CommentChatCommandAttachmentStyle_styleTypeRenderer.graphql")})}),null);

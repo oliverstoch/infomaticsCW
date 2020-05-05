@@ -1,0 +1,3 @@
+if (self.CavalryLogger) { CavalryLogger.start_js(["gl2yj"]); }
+
+__d("UFI2CommentChatCommandAttachment_attachment.graphql",[],(function(a,b,c,d,e,f){"use strict";a={argumentDefinitions:[],kind:"Fragment",metadata:null,name:"UFI2CommentChatCommandAttachment_attachment",selections:[{alias:null,args:null,concreteType:null,kind:"LinkedField",name:"target",plural:!1,selections:[{kind:"InlineFragment",selections:[{alias:null,args:null,concreteType:"TextWithEntities",kind:"LinkedField",name:"attachment_text",plural:!1,selections:[{alias:null,args:null,kind:"ScalarField",name:"text",storageKey:null}],storageKey:null}],type:"ChatCommandResult"}],storageKey:null}],type:"StoryAttachment"};e.exports=a}),null);
