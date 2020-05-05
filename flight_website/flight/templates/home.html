@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
+<div itemscope="" itemtype="http://schema.org/Flight">
 <div class="container">
     <div class="search">
        <h2>Search Flights..</h2>
@@ -13,29 +14,36 @@
     
     <div class="tabcontent" id="oneway">
        <h2>Search Flights...</h2>
-        <form action="/" method="post">
+		<form action="/" method="post">
             <div class="out">
-                <label for="date_out">Date : </label>
+				<div itemscope="" itemtype="https://schema.org/Trip">
+                <label itemprop=" for="date_out">Date : </label>
                 <input type="date" id="date_out">
-                <label for="origin">From : </label>
+				</div>
+				<div itemprop="about" itemscope itemtype="http://schema.org/City" id="city">
+				<label itemprop="origin">From : </label>
                 <input type="text" id="origin">
-                <label for="destination">Destination : </label>
+                <label itemprop="destination">Destination : </label>
                 <input type="text" id="destination">
-            </div>
+                </div>
+			</div>
         </form>
     </div>
     
     <div class="tabcontent" id="return">
         <form action="/" method="post">
             <div class="out_in">
-                <label for="date_out">Outbound Date: </label>
+			    <span itemtype="http://schema.org/Flight">
+                <label itemprop="departureTime">Outbound Date: </label>
                 <input type="date" id="date_out">
                 <label for="date_in">Return : </label>
                 <input type="date" id="date_in">
+				<div itemprop="about" itemscope itemtype="http://schema.org/City" id="city">
                 <label for="origin">From : </label>
                 <input type="text" id="origin">
                 <label for="destination">Destination : </label>
                 <input type="text" id="destination">
+				</div>
             </div>
         </form>
     </div>
