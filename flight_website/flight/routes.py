@@ -1,14 +1,52 @@
 import os
-from flask import render_template, url_for
+from flask import render_template, url_for, request
 from flight import app
 from heapq import nsmallest
 from statistics import mean 
 from operator import itemgetter 
 import requests
+from flight.forms import *
 
 @app.route("/")
-@app.route("/home")
+@app.route("/home", methods= ['GET','POST']  )
 def home():
+
+
+
+
+	#foms
+	form = SearchForm()
+	if form.is_submitted():
+		form_result = request.form
+	
+		url_places = "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/UK/GBP/en-GB/"
+		querystringOrigin = {"query":form_result["origin"]}
+		querystringDestination = {"query":form_result["destination"]}
+		headers = {
+		    'x-rapidapi-host': "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
+		    'x-rapidapi-key': "e9dd7bf803mshdf38afc80a64cfap197f5cjsn980ff6c6c303"
+		    }
+		#IF TOO MANY QUOTES SWITCH KEY!!!!
+		#e9b2718b05mshcc5900c72ea4c29p1ccf54jsncf4f4e5f093c
+	    #e9dd7bf803mshdf38afc80a64cfap197f5cjsn980ff6c6c303
+		response_origins = requests.request("GET", url_places, headers=headers, params=querystringOrigin).json()
+		response_destinations = requests.request("GET", url_places, headers=headers, params=querystringDestination).json()
+
+
+		if response_origins.get("Places") and response_destinations.get("Places"):
+		
+			for placeOrigin in response_origins.get("Places"):
+				for placeDestination in response_destinations.get("Places"):
+					origin = placeOrigin['PlaceId']
+					destination = placeDestination['PlaceId']
+					print("from", origin," TO " ,destination)
+
+		#####DONT KNOW WHAT ELSE TO DO HERE.....######
+
+
+
+
+
 
  	#These 3 will remain hardcoded i think. no need to request the user to input this info right?
 	country = "US"
@@ -21,7 +59,7 @@ def home():
 	outboundpatialdate = "2020-09-01"    
 
 	#url = "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/{0}/{1}/{2}/{3}/{4}/{5}".format(
-	url = "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browseroutes/v1.0/{0}/{1}/{2}/{3}/{4}/{5}".format(
+	url_routes = "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browseroutes/v1.0/{0}/{1}/{2}/{3}/{4}/{5}".format(
 		country,
 		currency,
 		locale,
@@ -46,7 +84,7 @@ def home():
 
 
     #Query Skyscanner API for Quotes.
-	response = requests.request("GET", url, headers=headers, params=querystring)
+	response = requests.request("GET", url_routes, headers=headers, params=querystring)
 
 	#Convert responce to Dictionary.
 	responseDictionary = response.json()
@@ -54,7 +92,9 @@ def home():
 	#Get lists, quotes and carriers.(a Quote is an offer or possible route. Carriers is a list of airlines used in the any of the quotes)
 	quotes = getQuotes(responseDictionary)
 	carriers = responseDictionary.get("Carriers")
-	return render_template('home.html', title = 'Home', response = response, quotes = quotes, carriers = carriers)
+
+
+	return render_template('home.html', title = 'Home', response = response, quotes = quotes, carriers = carriers, form = form)
 
 
 
@@ -98,6 +138,8 @@ def getQuotes(responseDictionary):
 	#Sort list quotes by valueForMoney first, and cheapest seconed
 	quotes = sorted(quotes, key=lambda d: (-d['valueForMoney'], d['MinPrice']))
 	return quotes
+
+
 
 
 def GetOriginName(quote, places):

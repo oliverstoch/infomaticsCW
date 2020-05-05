@@ -1,0 +1,3 @@
+if (self.CavalryLogger) { CavalryLogger.start_js(["goVlf"]); }
+
+__d("PublicEventCometRSVPButtonStrings",["fbt","React"],(function(a,b,c,d,e,f,g){"use strict";b("React");function a(a){return a==="GOING"?g._("Going"):g._("Going")}function c(a){return a==="WATCHED"?g._("Interested"):g._("Interested")}function d(a){return a==="WATCHED"?g._("Not Interested"):g._("Not Going")}e.exports={Going:a,Interested:c,Remove:d}}),null);

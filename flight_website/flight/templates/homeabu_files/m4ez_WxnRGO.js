@@ -1,0 +1,4 @@
+if (self.CavalryLogger) { CavalryLogger.start_js(["\/e9Xm"]); }
+
+__d("pollConfig",[],(function(a,b,c,d,e,f){"use strict";e.exports={POLL_MAX_OPTION_LENGTH:140}}),null);
+__d("UFI2ScaleRect",["invariant","FBLogger"],(function(a,b,c,d,e,f,g){"use strict";function a(a){return h(a,!0)}function c(a){return h(a,!1)}function h(a,c){var d=a.srcHeight,e=a.srcWidth,f=a.maxHeight,h=a.maxWidth;a=a.gracefullyFallbackToMaxDimensionWhenHeightOrWidthIsZero;!1===a?(d>0||g(0,5272,d),e>0||g(0,5273,e)):(d===0||e===0)&&b("FBLogger")("ufi2").warn("Scaling UFI2 rect with invalid zero height or width: height=%s / width=%s",String(d),String(e));f>0||g(0,5274,f);h>0||g(0,5275,h);d=a&&d===0?f:d;a=a&&e===0?h:e;e=h/a;h=f/d;f=c?Math.min(e,h):Math.min(e,h,1);return{height:Math.round(d*f),width:Math.round(a*f)}}e.exports={scaleToContain:a,shrinkToContain:c}}),null);

@@ -1,0 +1,3 @@
+if (self.CavalryLogger) { CavalryLogger.start_js(["j0Lxs"]); }
+
+__d("UFI2CommentChatCommandAttachmentStyle_styleTypeRenderer.graphql",[],(function(a,b,c,d,e,f){"use strict";a={argumentDefinitions:[],kind:"Fragment",metadata:null,name:"UFI2CommentChatCommandAttachmentStyle_styleTypeRenderer",selections:[{alias:null,args:null,concreteType:"StoryAttachment",kind:"LinkedField",name:"attachment",plural:!1,selections:[{args:null,kind:"FragmentSpread",name:"UFI2CommentChatCommandAttachment_attachment"}],storageKey:null}],type:"StoryAttachmentChatCommandStyleRenderer"};e.exports=a}),null);
