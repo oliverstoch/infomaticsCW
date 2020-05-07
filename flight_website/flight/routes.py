@@ -66,7 +66,7 @@ def home():
                 #Get lists, quotes and carriers.(a Quote is an offer or possible route. Carriers is a list of airlines used in the any of the quotes)
                 quotes = getQuotes(responseDictionary)
                 carriers = responseDictionary.get("Carriers")
-                return render_template('home.html', title = 'Home', response = response, carriers = carriers, form = form)
+                return render_template('home.html', title = 'Home', quotes = quotes, carriers = carriers, form = form)
                 
         return render_template('home.html', title = 'Home', form = form)
 
