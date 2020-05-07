@@ -1,0 +1,67 @@
+<places>
+
+	<country name="Canada">
+			<province name="Ontario">
+				<city name="London">
+					<airport name="London International Airport" place_id="YXU"></airport>
+				</city>
+		</province>
+	</country>
+
+	<country name="United Kingdom">
+		<province name="England">
+				<city name="London">
+					<airport name="London Heathrow" place_id="LHR"></airport>
+					<airport name="London Gatwick Airport" place_id="LGW"></airport>
+					<airport name="London Stansted Airport" place_id="STN"></airport>
+				</city>
+		</province>
+		<province name="Wales">
+				<city name="Cardiff">
+					<airport name="Cardiff Airport" place_id="CWL"></airport>
+				</city>
+		</province>
+	</country>
+
+	<country name="France">
+			<province name="Île-de-France">
+				<city name="Paris">
+					<airport name="Charles de Gaulle Airport" place_id="CDG"></airport>
+					<airport name="Orly Airport" place_id="ORY"></airport>
+				</city>
+		</province>
+	</country>
+
+	<country name="Spain">
+		<province name="Barcelona">
+			<city name="Barcelona">
+				<airport name="Barcelona Airport-El Prat" place_id="BCN"></airport>
+			</city>
+		</province>
+	</country>
+	
+	<country name="United States">
+		<province name="California">
+			<city name="Los Angeles">
+				<airport name="Los Angeles International Airport" place_id="LAX"></airport>
+			</city>
+		</province>
+		<province name="New York">
+			<city name="New York City">
+				<airport name="John F. Kennedy International Airport" place_id="JFK"></airport>
+			</city>
+		</province>
+	</country>
+
+	<country name="Japan">
+		<province name="Tokyo">
+			<city name="Chiba">
+				<airport name="Narita International Airport" place_id="NRT"></airport>
+			</city>
+			<city name="Ōta">
+				<airport name="Haneda Airport" place_id="HND"></airport>
+			</city>
+		</province>
+	</country>
+
+</places>

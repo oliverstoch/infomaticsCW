@@ -4,10 +4,18 @@
     <meta charset="UTF-8">
     <link rel=stylesheet ztype=text/css href="{{ url_for('static', filename='style.css') }}">
     <link href='https://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet'>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.js"></script>
+   
     <title>{{ title }}</title>
 </head>
 <body>
-  <div class="header">
+<div class="header">
+	<header>FlightScanner</header>
+</div>
+ <!---
+ <div class="header">
    <header>FlightScanner</header>
    <div class="navbar">
         <ul>
@@ -15,6 +23,9 @@
             <li><a href="#">About</a></li>
         </ul>
    </div>
+--->   
+   <div id="div">
+   	
    </div>
    <div class="flash_messages">
         {% with messages = get_flashed_messages() %}
