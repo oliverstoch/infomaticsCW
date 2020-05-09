@@ -70,11 +70,7 @@ def home():
                 quotes = getQuotes(responseDictionary)
                 
                 carriers = responseDictionary.get("Carriers")
-<<<<<<< HEAD
 
-
-=======
->>>>>>> 97e84e14af93eab3e1a5eb6dc0717b631898a7a8
                 return render_template('home.html', title = 'Home', quotes = quotes, carriers = carriers, form = form)
                 
         return render_template('home.html', title = 'Home', form = form)

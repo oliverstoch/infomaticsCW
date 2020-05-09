@@ -12,6 +12,9 @@
               <p>
                 {{form.departDate.label}}<br>
                 {{form.departDate(placeholder="e.g. 2020-5-29", size=30) }}
+                {% for error in form.departDate.errors %}
+					<span style="color: red;">[{{error}}]</span>
+				{% endfor %}
               </p>
               <p>
 				{{form.origin.label}}
